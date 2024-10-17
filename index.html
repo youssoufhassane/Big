@@ -1,0 +1,566 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+
+    if (!isset($_SESSION['LOGIN'])) {
+        header("Location: /Test/index.php");
+        exit();
+    }
+
+
+    if (!isset($_SESSION['droits'])) {
+        // Initialiser les droits si non définis
+        $_SESSION['droits'] = array(
+            'LECTURE' => 0,
+            'CREATION' => 0,
+            'MODIFICATION' => 0,
+            'PARAMETRE' => 0,
+            'UTILISATEUR' => 0
+        );
+    }
+}
+require "/wamp64/www/Narindu/server/data.php";
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="Css/w3.css">
+    <title>Test</title>
+</head>
+<style>
+    @media (min-width : 768px) {
+        .act-struc {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .body-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .acteur {
+            width: 600px;
+            height: 250px;
+            margin-right: 10px;
+            background: #4ad776 !important;
+            text-transform: uppercase;
+        }
+
+        .teur:hover {
+            background-color: white !important;
+        }
+
+        .structure {
+            width: 600px;
+            height: 250px;
+            /* margin: 5px;*/
+            background: orange !important;
+            text-transform: uppercase;
+        }
+
+        .opera-repor {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .opera {
+            width: 600px;
+            height: 250px;
+            margin-right: 10px;
+            background: #ff0023 !important;
+            text-transform: uppercase;
+        }
+
+        .report {
+            width: 600px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /*margin: 5px;*/
+            text-transform: uppercase;
+            background: #0dcaf0 !important;
+        }
+
+        .tion,
+        .aa {
+            margin-top: 10px;
+        }
+
+        .tion {
+            background-color: white !important;
+        }
+
+        .report span,
+        .acteur span,
+        .structure span,
+        .opera span {
+            color: black;
+            font-size: 20px;
+            font-weight: 900;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+        }
+
+
+        #act,
+        #Demo,
+        #Demo1 {
+            width: 600px;
+        }
+
+        #para {
+            width: 100%;
+        }
+
+        .parame {
+            width: 90vw;
+            margin: 10px 5px;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .trage {
+            background: none !important;
+        }
+
+        .deconnexion a {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            top: 50px;
+            text-transform: uppercase;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            top: 40px
+        }
+
+        .footer img {
+            width: 100vw;
+        }
+
+        #navbarNav {
+            display: none !important;
+        }
+
+        .p {
+            font-weight: bold;
+            color: black;
+            text-align: center;
+            position: relative;
+            bottom: 20px !important;
+        }
+
+    }
+
+    @media(max-width:767px) {
+        .act-struc {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .acteur {
+            width: 180px;
+            height: 200px;
+            /* margin: 5px;
+            background: #4ad776 !important;*/
+            text-transform: uppercase;
+            background: none !important;
+        }
+
+        .structure {
+            width: 180px;
+            height: 200px;
+            /* margin: 5px;
+            background: orange !important;*/
+            text-transform: uppercase;
+            background: none !important;
+
+        }
+
+        .opera-repor {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .opera {
+            width: 180px;
+            height: 200px;
+            /* margin: 5px;
+            background: #ff0023 !important;*/
+            text-transform: uppercase;
+            background: none !important;
+
+        }
+
+        .report {
+            width: 180px;
+            height: 171px;
+            margin-top: 15px;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /*margin: 5px;
+            background: #0dcaf0 !important;*/
+            text-transform: uppercase;
+            background: none !important;
+        }
+
+        .report span,
+        .acteur span,
+        .structure span,
+        .opera span {
+            color: black;
+            font-size: 20px;
+            font-weight: 900;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .parame {
+            width: 370px;
+            margin: 10px 5px;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .deconnexion a {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            top: 50px;
+            text-transform: uppercase;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            top: 40px
+        }
+
+        .teur {
+            background: url('Images/ico.ico') no-repeat center !important;
+
+        }
+
+        .ture {
+            background: url('Images/gro.ico') no-repeat center !important;
+            margin-left: 10px;
+        }
+
+        .report {
+            background: url('Images/g.ico') no-repeat center !important;
+        }
+
+        .tion {
+            background: url('Images/unitetrans.ico') no-repeat center !important;
+        }
+
+        #para,
+        #act,
+        #Demo,
+        #Demo1 {
+            width: 100%;
+        }
+
+        .p {
+            font-weight: bold;
+            color: black;
+            text-align: center;
+
+        }
+
+        .w3-button:hover {
+            background: none !important;
+        }
+
+
+    }
+</style>
+
+<body>
+    <div class="header-content">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Kiam Kri</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <p> Cette application gere le suivi des transactions dans la filière laitière couvrant les flux physique (volumes de lait cru)
+                        et financier (dépenses) entre les éleveurs, les collecteurs, les centres de collecte et les unités de transformation laitières (artisanales et industrielles).<br>
+                        <span><b>L'objectif global</b> recherché est d'améliorer la traçabilité et
+                            la gestion des flux des produits laitiers locaux dans la zone d’intervention du projet</span><br>
+
+                        <span>
+                            <b> Les objectifs spécifiques</b> de cette application sont de :
+                            <ul>
+                                <li> Suivre le volume de lait cru échangé entre les acteurs le long de la filière lait local ;
+                                </li>
+                                <li> Enregistrer les transactions financières liées à ces échanges.
+                                </li>
+                            </ul>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="body-content my-5">
+            <p class="my-2 p">Projet Nariindu – Promouvoir le lait des petits producteurs au Sahel </p>
+            <div class="act-struc">
+                <div class="w3-dropdown-click teur">
+                    <?php if ($_SESSION['droits']['LECTURE'] == 1 || $_SESSION['droits']['CREATION'] == 1) { ?>
+
+                        <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur' || $_SESSION['PROFIL'] == 'agent') { ?>
+                            <button onclick="myFunction()" class="w3-button w3-black text-center acteur">
+                                <span>Acteurs</span>
+                            </button>
+                        <?php } ?>
+                        <div id="Demo" class="w3-dropdown-content w3-bar-block w3-border">
+                            <div class="w3-dropdown-click">
+                                <button onclick="liste()" id="Demo" class="w3-bar-item w3-button">Eleveurs</button>
+                                <div id="list" class="w3-dropdown-content w3-bar-block w3-border">
+                                    <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur') { ?>
+                                        <a href="handler/eleveur" class="w3-bar-item w3-button">Nouveau</a>
+                                    <?php } ?>
+                                    <?php if ($_SESSION['PROFIL'] == 'administrateur') { ?>
+                                        <a href="Tables/Liste/eleveur" class="w3-bar-item w3-button">Liste</a>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <div class="w3-dropdown-click">
+                                <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur' || $_SESSION['PROFIL'] == 'agent') { ?>
+                                    <button onclick="collecteur()" id="Demo" class="w3-bar-item w3-button">Collecteurs</button>
+                                <?php } ?>
+                                <div id="coll" class="w3-dropdown-content w3-bar-block w3-border">
+                                    <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur') { ?>
+
+                                        <a href="Tables/collecteur" class="w3-bar-item w3-button">Nouveau</a>
+                                    <?php } ?>
+                                    <?php if ($_SESSION['PROFIL'] == 'administrateur') { ?>
+                                        <a href="Tables/Liste/collecteur" class="w3-bar-item w3-button">Liste</a>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <div class="w3-dropdown-click">
+                                <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur' || $_SESSION['PROFIL'] == 'agent') { ?>
+                                    <button onclick="distributeur()" id="Demo" class="w3-bar-item w3-button">Distributeurs/Client</button>
+                                <?php } ?>
+                                <div id="distri" class="w3-dropdown-content w3-bar-block w3-border">
+                                    <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur') { ?>
+                                        <a href="Tables/distributeur" class="w3-bar-item w3-button">Nouveau</a>
+                                    <?php } ?>
+                                    <?php if ($_SESSION['PROFIL'] == 'administrateur') { ?>
+                                        <a href="Tables/Liste/distributeur" class="w3-bar-item w3-button">Liste</a>
+                                    <?php } ?>
+
+                                </div>
+                            </div>
+                            <div class="w3-dropdown-click">
+                                <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur' || $_SESSION['PROFIL'] == 'agent') { ?>
+                                    <button onclick="statistique()" id="Demo" class="w3-bar-item w3-button">Statistique</button>
+                                <?php } ?>
+                                <div id="stat" class="w3-dropdown-content w3-bar-block w3-border">
+                                    <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur' || $_SESSION['PROFIL'] == 'agent') { ?>
+                                        <a href="Statistique/utl" class="w3-bar-item w3-button">Unite de transformation</a>
+                                    <?php } ?>
+                                    <?php if ($_SESSION['PROFIL'] == 'administrateur' || $_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'agent') { ?>
+                                        <a href="Statistique/collecteur" class="w3-bar-item w3-button">Collecteur</a>
+                                    <?php } ?>
+                                    <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur' || $_SESSION['PROFIL'] == 'agent') { ?>
+                                        <a href="Statistique/centre" class="w3-bar-item w3-button">Centre de collecte</a>
+                                    <?php } ?>
+                                    <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur' || $_SESSION['PROFIL'] == 'agent') { ?>
+                                        <a href="Statistique/statistique_distributeur" class="w3-bar-item w3-button">Distributeur</a>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+                <div class="w3-dropdown-click ture">
+                    <?php if ($_SESSION['droits']['LECTURE'] == 1 || $_SESSION['droits']['CREATION'] == 1) { ?>
+                        <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur') { ?>
+                            <button onclick="myFunction1()" class="w3-button w3-black text-center structure"><span>Structures</span></button>
+                            <div id="Demo1" class="w3-dropdown-content w3-bar-block w3-border">
+                                <a href="Tables/ferme" class="w3-bar-item w3-button">Fermes</a>
+                                <a href="Tables/union_coop" class="w3-bar-item w3-button">Union_Coops</a>
+                                <a href="Tables/centre" class="w3-bar-item w3-button">Centres de Collecte</a>
+                                <a href="Tables/cooperative" class="w3-bar-item w3-button">Coopératives</a>
+                                <a href="Tables/unite" class="w3-bar-item w3-button">Unite de Transformation</a>
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <div class="opera-repor">
+                <?php if ($_SESSION['droits']['LECTURE'] == 1 || $_SESSION['droits']['CREATION'] == 1) { ?>
+                    <div class="w3-dropdown-click tion">
+                        <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur') { ?>
+                            <button onclick="activite()" class="w3-button w3-black text-center opera"><span>Opérations</span></button>
+                            <div id="act" class="w3-dropdown-content w3-bar-block w3-border">
+                                <a href="Tables/operation_collecte" class="w3-bar-item w3-button">Collecte</a>
+                                <a href="Tables/operation_transformation" class="w3-bar-item w3-button">Transformation</a>
+                                <a href="Tables/operation_vente" class="w3-bar-item w3-button">Vente</a>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <?php if ($_SESSION['PROFIL'] == 'superviseur' || $_SESSION['PROFIL'] == 'administrateur' || $_SESSION['PROFIL'] == 'agent') { ?>
+                        <a href="Tables/synthese" style="text-decoration: none;" class="aa"><button class="w3-button w3-black report"><span>Reporting</span></button> </a>
+                    <?php } ?>
+                <?php } ?>
+            </div>
+
+            <div class="parametrage">
+                <div class="w3-dropdown-click trage">
+                    <?php if ($_SESSION['droits']['LECTURE'] == 1 || $_SESSION['droits']['CREATION'] == 1) { ?>
+                        <?php if ($_SESSION['PROFIL'] == 'administrateur' || $_SESSION['PROFIL'] == 'superviseur') { ?>
+                            <button onclick="parametre()" class="w3-button w3-black text-center parame">Paramètres</button>
+                            <div id="para" class="w3-dropdown-content w3-bar-block w3-border">
+                                <a href="Tables/type_produit" class="w3-bar-item w3-button">Type de produit</a>
+                                <a href="Tables/type_vente" class="w3-bar-item w3-button">Type de vente</a>
+                                <a href="Tables/type_utl" class="w3-bar-item w3-button">Type de utl</a>
+                                <a href="Tables/localite" class="w3-bar-item w3-button">Localités</a>
+                                <div class="w3-dropdown-click">
+                                    <?php if ($_SESSION['PROFIL'] == 'administrateur') { ?>
+                                        <button onclick="utilisateur()" id="para" class="w3-bar-item w3-button">utilisateur</button>
+                                        <div id="uti" class="w3-dropdown-content w3-bar-block w3-border">
+                                            <a href="handler/action_handler?action=nouveau_utilisateur" class="w3-bar-item w3-button">Nouveau Utilisateur</a>
+                                            <a href="Tables/Liste/liste_utilisateur" class="w3-bar-item w3-button">Liste Utilisateur</a>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <?php if ($_SESSION['PROFIL'] == 'administrateur') { ?>
+                                    <a href="./admin_connected_users.php" class="w3-bar-item w3-button">Utilisateur Connectés</a>
+                                <?php } ?>
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
+                </div>
+
+            </div>
+            <div class="deconnexion">
+                <a href="handler/action_handler?action=logout">Déconnexion</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <img src="Images/gizz.png" width="300px" height="200px" alt="">
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("Demo");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
+        }
+
+        function myFunction1() {
+            var y = document.getElementById("Demo1");
+            if (y.className.indexOf("w3-show") == -1) {
+                y.className += " w3-show";
+            } else {
+                y.className = y.className.replace(" w3-show", "");
+            }
+        }
+
+        function activite() {
+            var z = document.getElementById("act");
+            if (z.className.indexOf("w3-show") == -1) {
+                z.className += " w3-show";
+            } else {
+                z.className = z.className.replace(" w3-show", "");
+            }
+        }
+
+        function activite() {
+            var z = document.getElementById("act");
+            if (z.className.indexOf("w3-show") == -1) {
+                z.className += " w3-show";
+            } else {
+                z.className = z.className.replace(" w3-show", "");
+            }
+        }
+
+        function parametre() {
+            var w = document.getElementById("para");
+            if (w.className.indexOf("w3-show") == -1) {
+                w.className += " w3-show";
+            } else {
+                w.className = w.className.replace(" w3-show", "");
+            }
+        }
+
+        function liste() {
+            var w = document.getElementById("list");
+            if (w.className.indexOf("w3-show") == -1) {
+                w.className += " w3-show";
+            } else {
+                w.className = w.className.replace(" w3-show", "");
+            }
+        }
+
+        function collecteur() {
+            var w = document.getElementById("coll");
+            if (w.className.indexOf("w3-show") == -1) {
+                w.className += " w3-show";
+            } else {
+                w.className = w.className.replace(" w3-show", "");
+            }
+        }
+
+        function utilisateur() {
+            var w = document.getElementById("uti");
+            if (w.className.indexOf("w3-show") == -1) {
+                w.className += " w3-show";
+            } else {
+                w.className = w.className.replace(" w3-show", "");
+            }
+        }
+
+        function distributeur() {
+            var w = document.getElementById("distri");
+            if (w.className.indexOf("w3-show") == -1) {
+                w.className += " w3-show";
+            } else {
+                w.className = w.className.replace(" w3-show", "");
+            }
+        }
+
+        function statistique() {
+            var w = document.getElementById("stat");
+            if (w.className.indexOf("w3-show") == -1) {
+                w.className += " w3-show";
+            } else {
+                w.className = w.className.replace(" w3-show", "");
+            }
+        }
+    </script>
+</body>
+
+</html>
