@@ -1,0 +1,155 @@
+<?php
+require "/wamp64/www/Test/server/data.php";
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Test/Css/boostrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <title>Distributeur</title>
+</head>
+<style>
+    .select2-container .select2-selection--single {
+        height: auto;
+        padding: 6px 12px;
+        line-height: 1.428571429;
+        color: #555;
+        background-color: #fff;
+        border: solid #71cd6e;
+        border-radius: 4px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 38px;
+        right: 6px;
+    }
+
+    th {
+        text-transform: uppercase;
+    }
+
+    html,
+    body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        background: url('https://sodiaal-fromages-ingredients.com/wp-content/uploads/2020/10/Brie.jpg') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+
+
+    .container {
+        opacity: 0.9;
+    }
+
+    .form-container {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+
+    }
+
+    .form-title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .form-group select,
+    .form-group input {
+        border: solid #71cd6e;
+    }
+
+    .form-footer {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="container my-5">
+        <div class="form-container">
+            <h1 class="form-title">Ajouter Un Distributeur</h1>
+            <form action="../server/distributeur_traitement.php" method="post">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="nom_prenom">Nom et Prénom :</label>
+                            <input type="text" name="NOM_PRENOM" id="nom_prenom" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="localisation">Localisation :</label>
+                            <input type="text" name="LOCALISATION" id="localisation" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="nbre_client">Nombre de client :</label>
+                            <input type="int" name="NBRE_CLIENT" id="nbre_client" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="rayon_couverture">Moyen de deplacement :</label>
+                            <select class="form-control" name="MOYEN_DEPLACEMENT" required>
+                                <option selected disabled>Moyen de deplacement</option>
+                                <option value="tricycle">Tricycle</option>
+                                <option value="moto">Moto</option>
+                                <option value="vehicule">Vehicule</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="telephone">Téléphone :</label>
+                            <input type="tel" name="N_TELEPHONE" id="telephone" class="form-control" pattern="[0-9]{8}" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g,'')" ; required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <button type="reset" class="btn btn-secondary">Annuler</button>
+                    <a href="/Test/acceuil.php" class="btn btn-success">Retour à l'acceuil</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="../Js/bootstrap.bundle.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>
